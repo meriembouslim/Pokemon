@@ -1,0 +1,100 @@
+import unittest
+from unittest.mock import Mock
+import requests
+import Main_Pokemon_Game_v2
+from Main_Pokemon_Game_v2 import game, get_pokemon_info, round_summary
+
+
+class TestStartMenu(unittest.TestCase):
+
+    # @patch('Main_Pokemon_Game_v2.Pokemon')
+    def test_start_menu(self):
+        # call start_menu
+        Main_Pokemon_Game_v2.start_menu()
+
+        # this is testing the first line of the start_menu function
+        # it is checking that the pygame screen goes black as expected
+        expected_color = (0, 0, 0)
+        actual_color = game.get_at((0, 0))
+        self.assertEqual(actual_color, expected_color)
+
+    def test_start_menu_text_lines(self):
+        # Call the start_menu function
+        Main_Pokemon_Game_v2.start_menu()
+
+        # This is checking that the game surface is the same size as specified
+        expected_title_position = (1000, 500)
+        actual_title_position = game.get_size()
+        self.assertEqual(actual_title_position, expected_title_position)
+
+
+class TestGetPokemonInfo(unittest.TestCase):
+
+    def testName(self):
+        # testing for pokmemon with id 1 and comparing stat 'hp' returns value
+        expected_output = ('bulbasaur', 45)
+        actual_output = get_pokemon_info(1, 'hp')
+        self.assertEqual(actual_output, expected_output)
+
+
+class TestRoundSummary(unittest.TestCase):
+
+    def test_winner(self):
+        # this test is checking that if the computer wins, the p1_score list is updated
+        # the function returns a tuple of the player 1 and computer scores so the expected out is:
+        expected_output = ([], [1])
+        actual_output = round_summary(35, 'player one', [], [], 2, 'hp')
+        self.assertEquals(expected_output, actual_output)
+
+    def test_tie(self):
+        # we want to test the scenario where there is a tie
+        # when this happens, we don't want either player or computer scores to be updated
+        expected_output = ([], [])
+        actual_output = round_summary(25, 'player one', [], [], 25, 'hp')
+        self.assertEquals(expected_output, actual_output)
+
+    def testing_rounds(self):
+        # we want to test that existing user scores are updated when another win or loss is recorded
+        expected_output = ([1], [1])
+        actual_output = round_summary(35, 'player one', [1], [], 2, 'hp')
+        self.assertEquals(expected_output, actual_output)
+
+
+class TestRequests(unittest.TestCase):
+
+    # we want to test the try except in the get_pokemon_info function
+    def test_http_error(self):
+        pokemon_id = 10000  # Use an invalid Pokemon ID to trigger an HTTP error
+        compare = 'hp'
+
+        # Mock the requests.get method to return an HTTP error response
+        mock_response = Mock()
+        mock_response.raise_for_status.side_effect = requests.exceptions.HTTPError('404 Not Found')
+        requests.get = Mock(return_value=mock_response)
+
+        # calling the function to assert that it raises the expected HTTPError
+        with self.assertRaises(requests.exceptions.HTTPError) as cm:
+            get_pokemon_info(pokemon_id, compare)
+
+        # Assert the error message
+        self.assertEqual(str(cm.exception), '404 Not Found')
+
+    def test_http_error_edge_Case(self):
+        pokemon_id = 1011  # testing an edge case, Pokemon id=1011 - the current number of Pokemon in the database=1010
+        compare = 'hp'
+
+        # Mock the requests.get method to return an HTTP error response
+        mock_response = Mock()
+        mock_response.raise_for_status.side_effect = requests.exceptions.HTTPError('404 Not Found')
+        requests.get = Mock(return_value=mock_response)
+
+        # calling the function to assert that it raises the expected HTTPError
+        with self.assertRaises(requests.exceptions.HTTPError) as cm:
+            get_pokemon_info(pokemon_id, compare)
+
+        # Assert the error message
+        self.assertEqual(str(cm.exception), '404 Not Found')
+
+
+if __name__ == '__main__':
+    unittest.main()
