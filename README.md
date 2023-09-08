@@ -1,5 +1,5 @@
 Pokémon Battle Game
-A group project undertaken as part of the Code First Girls Nanodegree.
+
 
 ![image](https://github.com/meriembouslim/Pokemon/assets/129200952/8ed78132-bc1b-4928-97b9-c25a716490b4)
 
@@ -10,12 +10,6 @@ each round such as HP, speed and defence, essential attributes in the original P
 
 The program interacts with Pokémon API.
 
-👯 The Team‍️
-Alice Kalu
-Meriem Bouslim
-Mel Gentles
-Rita Ghimire
-Subeca Kirupananthan
 Getting Started
 Clone the repo
 In the terminal go on the working directory where you want to clone the project
