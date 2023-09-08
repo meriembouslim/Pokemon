@@ -1,0 +1,49 @@
+import pygame
+
+"""
+This file contains the text shown in the pygame UI during the game loop
+Some text variables are in the main file because they rely on other variables
+"""
+
+pygame.init()
+
+# start button
+start_font = pygame.font.SysFont('consolas', 40)
+start_space_line = start_font.render('Press space to start', True, 'green')
+
+# title button
+title = start_font.render('Welcome to Pokémon Battle!', True, 'yellow')
+
+# welcome message fonts
+wel_font = pygame.font.SysFont('courier new', 20)
+space_font = pygame.font.SysFont('consolas', 30)
+
+# welcome message text
+welcome_line_1 = wel_font.render('Welcome to the new mysterious island! You must be new here!', True, 'white')
+welcome_line_2 = wel_font.render('I\'m sure you\'ve  heard all the rumours about our exciting battles!',
+                                 True, 'white')
+welcome_line_3 = wel_font.render('Before you can be classed as an official trainer - you must learn the rules.', True,
+                                 'white')
+welcome_line_4 = wel_font.render('You must choose your Pokémon to battle wisely! Remember each pokemon', True, 'white')
+welcome_line_5 = wel_font.render('is unique and some are more common than others.', True, 'white')
+welcome_line_6 = wel_font.render('With that being said you are ready to commence. Let the battle begin!', True, 'white')
+welcome_line_7 = space_font.render('Press space to continue', True, 'green')
+
+# enter player name
+player_one_enter_name = space_font.render("Type in your name please", True, 'white')
+player_one_space = space_font.render('Press enter to start', True, 'green')
+player_one_enter = space_font.render('Press enter to complete', True, 'green')
+
+# rules page, except the first line which depends on player name input
+rules_line_2 = wel_font.render('Each player will input a Pokémon ID number.', True, 'white')
+rules_line_3 = wel_font.render('The winner is determined by comparing the base experience of the Pokémon.',
+                               True, 'white')
+rules_line_4 = wel_font.render('If your Pokémon\'s base experience is greater than your opponent\'s, you win.',
+                               True, 'white')
+rules_line_5 = wel_font.render('If it\'s lower, you lose. In case of a tie, nobody wins.', True, 'white')
+rules_line_6 = wel_font.render('The player with the highest score after three rounds wins the game.', True,
+                               'white')
+
+# enter id page, except the first line which depends on player name input
+enter_id_enter_one = space_font.render('Press enter to complete', True, 'green')
+enter_id_enter_two = space_font.render('Press enter again to continue', True, 'green')
