@@ -1,5 +1,5 @@
 Pokémon Battle Game
-
+A group project undertaken as part of the Code First Girls Nanodegree.
 
 img_1.png
 
