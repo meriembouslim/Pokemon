@@ -1,1 +1,73 @@
-gh repo clone meriembouslim/Pokemon
+import pygame
+import requests
+import io
+from urllib.request import urlopen
+
+
+"""
+This module contains the class and methods for calling up the images for the Pokemon in the game
+It is called up at the beginning of the game to display the start screen
+It is then called up for every round when Pokemon are chosen
+"""
+
+
+game_width = 1000  # change
+game_height = 500  # change
+size = (game_width, game_height)
+game = pygame.display.set_mode(size)
+
+# base url of the API
+url = 'https://pokeapi.co/api/v2'
+
+
+class Pokemon(pygame.sprite.Sprite):
+
+    def __init__(self, name, level, x, y):
+        pygame.sprite.Sprite.__init__(self)
+
+        # calling the Pokémon API endpoint
+        request = requests.get(f'{url}/pokemon/{name.lower()}')
+        self.json = request.json()
+
+
+        # getting and setting the Pokémon's name and level
+        self.name = name
+        self.level = level
+
+        # set the sprite position on the screen
+        self.x = x
+        self.y = y
+
+        # set the sprite position on the screen
+        self.num_potions = 3
+
+        # setting the Pokémon type
+        self.types = []
+        for i in range(len(self.json['types'])):
+            type = self.json['types'][i]
+            self.types.append(type['type']['name'])
+
+        # set the sprite's width
+        self.size = 200
+
+        # set the sprite to the front facing sprite
+        self.set_sprite('front_default')
+
+    def set_sprite(self, side):
+        # set the pokemon's sprite
+        image = self.json['sprites'][side]
+        image_stream = urlopen(image).read()
+        image_file = io.BytesIO(image_stream)
+        self.image = pygame.image.load(image_file).convert_alpha()
+
+        # scale the image
+        scale = self.size / self.image.get_width()
+        new_width = self.image.get_width() * scale
+        new_height = self.image.get_width() * scale
+        self.image = pygame.transform.scale(self.image, (new_width, new_height))
+
+    def draw(self, alpha=255):
+        sprite = self.image.copy()
+        transparency = (255, 255, 255, alpha)
+        sprite.fill(transparency, None, pygame.BLEND_RGBA_MULT)
+        game.blit(sprite, (self.x, self.y))
