@@ -1,7 +1,8 @@
 Pokémon Battle Game
 A group project undertaken as part of the Code First Girls Nanodegree.
 
-img_1.png
+![image](https://github.com/meriembouslim/Pokemon/assets/129200952/8ed78132-bc1b-4928-97b9-c25a716490b4)
+
 
 🏗 About
 Pokémon Battle Game is a program where the user goes head-to-head with a computer for three rounds where metrics are compared during
