@@ -1,0 +1,13 @@
+"""
+This file contains the initial variables to set up the game
+"""
+
+game_width = 1000
+game_height = 500
+name_list = []
+user_id_list = []
+comp_id_list = []
+comparison_list = []
+round_count = 0
+p1_score = []
+p2_score = []
